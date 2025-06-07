@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="recyclerCourses" type="id" />
+    <item name="textCourseDetail" type="id" />
+    <item name="buttonSaveCourse" type="id" />
+    <item name="editCourseName" type="id" />
+    <item name="courseTitle" type="id" />
+    <item name="courseDescription" type="id" />
+    <item name="studentName" type="id" />
+    <item name="studentEmail" type="id" />
+    <item name="textStudentDetail" type="id" />
+    <item name="recyclerStudents" type="id" />
+    <item name="editStudentName" type="id" />
+    <item name="buttonSaveStudent" type="id" />
+    <item name="teacherName" type="id" />
+    <item name="teacherSubject" type="id" />
+    <item name="textTeacherDetail" type="id" />
+    <item name="recyclerTeachers" type="id" />
+    <item name="editTeacherName" type="id" />
+    <item name="editTeacherSubject" type="id" />
+    <item name="buttonSaveTeacher" type="id" />
+</resources>
