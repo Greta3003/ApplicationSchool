@@ -5,16 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.applicationschool.Dto.StudentDto
 import com.example.applicationschool.R
 
-data class StudentDto(
-    val id: Long,
-    val name: String,
-    val email: String
-)
-
 class StudentAdapter(
-    private val students: List<StudentDto>,
+    private val students: List<StudentDto>?,
     private val onItemClick: (StudentDto) -> Unit
 ) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
 
@@ -23,8 +18,8 @@ class StudentAdapter(
         private val emailTextView: TextView = itemView.findViewById(R.id.studentEmail)
 
         fun bind(student: StudentDto) {
-            nameTextView.text = student.name
-            emailTextView.text = student.email
+            nameTextView.text = student.name.toString()
+            emailTextView.text = student.email.toString()
             itemView.setOnClickListener { onItemClick(student) }
         }
     }
@@ -36,8 +31,8 @@ class StudentAdapter(
     }
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
-        holder.bind(students[position])
+        students?.get(position)?.let { holder.bind(it) }
     }
 
-    override fun getItemCount(): Int = students.size
+    override fun getItemCount(): Int = students?.size ?: 0
 }

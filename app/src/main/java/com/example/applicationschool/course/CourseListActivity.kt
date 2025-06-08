@@ -7,7 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.applicationschool.Course.CourseAdapter
 import com.example.applicationschool.R
 
 class CourseListActivity : ComponentActivity() {

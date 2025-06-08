@@ -6,7 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BASE_URL = "http://localhost:8080/"
+    // Për emulator Android
+    private const val BASE_URL = "http://10.0.2.2:8080/"
 
     private val client = OkHttpClient.Builder()
         .build()
@@ -18,5 +19,6 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
+
     }
 }

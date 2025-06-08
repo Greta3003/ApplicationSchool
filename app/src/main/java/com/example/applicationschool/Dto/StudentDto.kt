@@ -6,17 +6,11 @@ data class StudentDto(
     val title: String?,
     val description: String?,
     val year: Int?,
-    val teacher: TeacherDto?,
-    val students: List<StudentDto.StudentDto>?,
-    val name: Any,
-    val email: Any
-) {
-    class StudentDto {
-        class StudentDto {
+    val teacher: TeacherDto?, // mund të jetë null
+    val name: String,
+    val email: String
+)
 
-        }
 
-    }
-}
 
 

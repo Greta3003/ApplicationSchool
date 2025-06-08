@@ -1,4 +1,4 @@
-package com.example.applicationschool.Course
+package com.example.applicationschool.course
 
 import android.view.LayoutInflater
 import android.view.View

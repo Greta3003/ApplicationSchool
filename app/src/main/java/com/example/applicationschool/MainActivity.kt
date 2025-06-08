@@ -5,7 +5,6 @@ package com.example.applicationschool
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,27 +22,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.applicationschool.course.CourseViewModel
-import com.example.applicationschool.student.StudentViewModel
-import com.example.applicationschool.teacher.TeacherViewModel
+import androidx.fragment.app.Fragment
 import com.example.applicationschool.ui.theme.ApplicationSchoolTheme
+
+// Model data classes (simple version për preview)
+data class Student(val name: String, val email: String)
+data class Course(val name: String, val description: String)
+data class Teacher(val firstName: String, val lastName: String, val subject: String)
 
 class MainActivity : ComponentActivity() {
 
-    private val studentViewModel: StudentViewModel by viewModels()
-    private val courseViewModel: CourseViewModel by viewModels()
-    private val teacherViewModel: TeacherViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        studentViewModel.loadStudents()
-        courseViewModel.loadCourses()
-        teacherViewModel.loadTeachers()
 
         setContent {
             ApplicationSchoolTheme {
@@ -51,10 +44,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DashboardScreen(
-                        studentViewModel,
-                        courseViewModel,
-                        teacherViewModel
+                    // Këtu thirr Dashboard me data statike, ose më vonë lidh me ViewModel-et e tu
+                    DashboardScreenStatic(
+                        students = sampleStudents,
+                        courses = sampleCourses,
+                        teachers = sampleTeachers
                     )
                 }
             }
@@ -63,15 +57,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun DashboardScreen(
-    studentViewModel: StudentViewModel,
-    courseViewModel: CourseViewModel,
-    teacherViewModel: TeacherViewModel
+fun DashboardScreenStatic(
+    students: List<Student>,
+    courses: List<Course>,
+    teachers: List<Teacher>
 ) {
-    val students by studentViewModel.studentList.observeAsState(emptyList())
-    val courses by courseViewModel.courseList.observeAsState(emptyList())
-    val teachers by teacherViewModel.teacherList.observeAsState(emptyList())
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -83,25 +73,26 @@ fun DashboardScreen(
             )
         }
     ) { padding ->
-        LazyColumn(modifier = Modifier
-            .padding(padding)
-            .padding(16.dp)
+        LazyColumn(
+            modifier = Modifier
+                .padding(padding)
+                .padding(16.dp)
         ) {
             item { SectionHeader("📚 Students") }
             items(students) { student ->
-                ItemCard(name = student.name)
+                ItemCard(name = "${student.name} - ${student.email}")
             }
 
             item { Spacer(modifier = Modifier.height(24.dp)) }
-            item { SectionHeader(" Courses") }
+            item { SectionHeader("📘 Courses") }
             items(courses) { course ->
-                ItemCard(name = course.name)
+                ItemCard(name = "${course.name} - ${course.description}")
             }
 
             item { Spacer(modifier = Modifier.height(24.dp)) }
-            item { SectionHeader(" Teachers") }
+            item { SectionHeader("👩‍🏫 Teachers") }
             items(teachers) { teacher ->
-                ItemCard(name = teacher.firstName.toString())
+                ItemCard(name = "${teacher.firstName} ${teacher.lastName} - ${teacher.subject}")
             }
         }
     }
@@ -130,4 +121,47 @@ fun ItemCard(name: String) {
             style = MaterialTheme.typography.bodyLarge
         )
     }
+}
+
+// Sample data për preview dhe testim
+
+val sampleStudents = listOf(
+    Student("Sara ALiaj", "SaraAliaj@gmail.com"),
+    Student("Orela_Kuci", "Orela_Kuci@example.com")
+)
+
+val sampleCourses = listOf(
+    Course("Mathematics", "Learn basic and advanced math"),
+    Course("Java Programming", "Learn the world of programming")
+)
+
+val sampleTeachers = listOf(
+    Teacher("Anila", "Blerta", "Mathematics"),
+    Teacher("Emanuel", "Anisa", "Programming")
+)
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewDashboard() {
+    ApplicationSchoolTheme {
+        DashboardScreenStatic(
+            students = sampleStudents,
+            courses = sampleCourses,
+            teachers = sampleTeachers
+        )
+        // Në MainActivity, funksion për të ndërruar fragment
+
+    }
+}
+
+
+
+private fun Unit.addToBackStack(nothing: Nothing?) {}
+
+private fun Unit.replace(value: Any, fragment: Fragment) {
+    TODO("Not yet implemented")
+}
+
+private fun Nothing?.beginTransaction() {
+    TODO("Not yet implemented")
 }

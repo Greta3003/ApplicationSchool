@@ -1,12 +1,17 @@
 package com.example.applicationschool.Api
-import androidx.tracing.perfetto.handshake.protocol.Response
+
 import com.example.applicationschool.Dto.CourseDto
 import com.example.applicationschool.Dto.CourseStudentAssocDto
 import com.example.applicationschool.Dto.CourseTeacherAssocDto
 import com.example.applicationschool.Dto.SimpleStringFilterDto
+import com.example.applicationschool.Dto.StudentDto
 import com.example.applicationschool.Dto.TeacherDto
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 interface ApiService {
+
     // Course endpoints
     @POST("upsertCourse")
     suspend fun upsertCourse(@Body courseDto: CourseDto): Response<RespSingleDto<CourseDto>>
@@ -21,17 +26,17 @@ interface ApiService {
     suspend fun getCourse(@Body longIdDto: LongIdDto): Response<RespSingleDto<CourseDto>>
 
     @POST("associateTeacherToCourse")
-    suspend fun <CourseTeacherAssocDto> associateTeacherToCourse(@Body assocDto: CourseTeacherAssocDto): Response<RespSingleDto<Void>>
+    suspend fun associateTeacherToCourse(@Body assocDto: CourseTeacherAssocDto): Response<RespSingleDto<Void>>
 
     @POST("removeTeacherFromCourse")
     suspend fun removeTeacherFromCourse(@Body assocDto: CourseTeacherAssocDto): Response<RespSingleDto<Void>>
 
     // Student endpoints
     @POST("upsertStudent")
-    suspend fun upsertStudent(@Body studentDto: CourseDto.StudentDto): Response<RespSingleDto<CourseDto.StudentDto>>
+    suspend fun upsertStudent(@Body studentDto: StudentDto): Response<RespSingleDto<StudentDto>>
 
     @POST("filterStudents")
-    suspend fun filterStudents(@Body filterDto: SimpleStringFilterDto): Response<RespSliceDto<CourseDto.StudentDto>>
+    suspend fun filterStudents(@Body filterDto: SimpleStringFilterDto): Response<RespSliceDto<StudentDto>>
 
     @POST("deleteStudent")
     suspend fun deleteStudent(@Body longIdDto: LongIdDto): Response<RespSingleDto<Void>>
@@ -43,7 +48,7 @@ interface ApiService {
     suspend fun removeStudentFromCourse(@Body assocDto: CourseStudentAssocDto): Response<RespSingleDto<Void>>
 
     @POST("getStudent")
-    suspend fun getStudent(@Body longIdDto: LongIdDto): Response<RespSingleDto<CourseDto.StudentDto>>
+    suspend fun getStudent(@Body longIdDto: LongIdDto): Response<RespSingleDto<StudentDto>>
 
     // Teacher endpoints
     @POST("upsertTeacher")
@@ -52,30 +57,29 @@ interface ApiService {
     @POST("filterTeachers")
     suspend fun filterTeachers(@Body filterDto: SimpleStringFilterDto): Response<RespSliceDto<TeacherDto>>
 
-    class RespSliceDto<T> {
-
-    }
-
     @POST("deleteTeacher")
     suspend fun deleteTeacher(@Body longIdDto: LongIdDto): Response<RespSingleDto<Void>>
 
-    class RespSingleDto<T> {
-
-    }
-
     @POST("getTeacher")
     suspend fun getTeacher(@Body longIdDto: LongIdDto): Response<RespSingleDto<TeacherDto>>
-
-    interface Response<T> {
-
-        abstract val isSuccessful: Boolean
-    }
 }
 
-annotation class Body
+// Klasa për dërgimin e id-ve tek backend-i
+data class LongIdDto(
+    val id: Long
+)
 
-class LongIdDto {
+// Wrapper për përgjigjet e një objekti
+data class RespSingleDto<T>(
+    val data: T?,
+    val success: Boolean,
+    val message: String?
+)
 
-}
-
-annotation class POST(val value: String)
+// Wrapper për përgjigjet që kthejnë lista të paginuara
+data class RespSliceDto<T>(
+    val content: List<T>,
+    val totalElements: Int,
+    val totalPages: Int,
+    val pageNumber: Int
+)

@@ -19,4 +19,5 @@
     <item name="editTeacherName" type="id" />
     <item name="editTeacherSubject" type="id" />
     <item name="buttonSaveTeacher" type="id" />
+    <item name="fragment_container" type="id" />
 </resources>
