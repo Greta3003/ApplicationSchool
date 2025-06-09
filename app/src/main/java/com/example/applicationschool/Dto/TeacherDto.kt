@@ -1,5 +1,5 @@
 package com.example.applicationschool.Dto
-
+//data class qe perfaqeson te dhenat e mesuesit apo teacher
 data class TeacherDto(
     val id: Long?,
     val firstName: String,

@@ -10,34 +10,34 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface ApiService {
+interface ApiService {//nderfaqe qe komunikon me serverin  per ta bere funksionale
 
-    // Course endpoints
+    // Course endpoints qe shton  ose perditeson nje kurs
     @POST("upsertCourse")
     suspend fun upsertCourse(@Body courseDto: CourseDto): Response<RespSingleDto<CourseDto>>
-
+    // Filtron kurset në bazë të një stringu kërkimi
     @POST("filterCourses")
     suspend fun filterCourses(@Body filterDto: SimpleStringFilterDto): Response<RespSliceDto<CourseDto>>
-
+    // Fshin një kurs sipas ID-së
     @POST("deleteCourse")
     suspend fun deleteCourse(@Body longIdDto: LongIdDto): Response<RespSingleDto<Void>>
-
+    // Merr të dhënat e një kursi sipas ID-së
     @POST("getCourse")
     suspend fun getCourse(@Body longIdDto: LongIdDto): Response<RespSingleDto<CourseDto>>
-
+    // Lidh një mësues me një kurs
     @POST("associateTeacherToCourse")
     suspend fun associateTeacherToCourse(@Body assocDto: CourseTeacherAssocDto): Response<RespSingleDto<Void>>
-
+    // Heq një mësues nga një kurs
     @POST("removeTeacherFromCourse")
     suspend fun removeTeacherFromCourse(@Body assocDto: CourseTeacherAssocDto): Response<RespSingleDto<Void>>
 
-    // Student endpoints
+    // Student endpoints  ku perditeson nje student
     @POST("upsertStudent")
     suspend fun upsertStudent(@Body studentDto: StudentDto): Response<RespSingleDto<StudentDto>>
-
+    // Filtron studentët në bazë të një stringu kërkimi
     @POST("filterStudents")
     suspend fun filterStudents(@Body filterDto: SimpleStringFilterDto): Response<RespSliceDto<StudentDto>>
-
+     //fshin studentit sipas id
     @POST("deleteStudent")
     suspend fun deleteStudent(@Body longIdDto: LongIdDto): Response<RespSingleDto<Void>>
 
@@ -79,7 +79,7 @@ data class RespSingleDto<T>(
 // Wrapper për përgjigjet që kthejnë lista të paginuara
 data class RespSliceDto<T>(
     val content: List<T>,
-    val totalElements: Int,
+    val totalElements: Int,// numri total i elementeve ne backend
     val totalPages: Int,
     val pageNumber: Int
 )

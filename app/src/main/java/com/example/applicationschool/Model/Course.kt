@@ -1,5 +1,5 @@
 package com.example.applicationschool.Model
-
+// Kjo është një klasë model që përfaqëson një kurs në sistemin e shkollës
 data class Course(
     val id: Long? = null,
     val code: String,

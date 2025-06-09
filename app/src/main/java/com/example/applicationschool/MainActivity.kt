@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.example.applicationschool.ui.theme.ApplicationSchoolTheme
 
-// Model data classes (simple version për preview)
+// Modelet për student, kurs dhe mësues
 data class Student(val name: String, val email: String)
 data class Course(val name: String, val description: String)
 data class Teacher(val firstName: String, val lastName: String, val subject: String)
@@ -39,12 +39,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            // Përdorimi i temës kryesore të aplikacionit
             ApplicationSchoolTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // Këtu thirr Dashboard me data statike, ose më vonë lidh me ViewModel-et e tu
+                    // Thirrja e ekranit dashboard me të dhëna statike
                     DashboardScreenStatic(
                         students = sampleStudents,
                         courses = sampleCourses,
@@ -56,6 +57,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Komponentë kryesor që shfaq dashboard-in me lista për studentë, kurse dhe mësues
 @Composable
 fun DashboardScreenStatic(
     students: List<Student>,
@@ -63,6 +65,7 @@ fun DashboardScreenStatic(
     teachers: List<Teacher>
 ) {
     Scaffold(
+        // Top bar me titullin "Dashboard"
         topBar = {
             TopAppBar(
                 title = { Text("Dashboard") },
@@ -78,19 +81,24 @@ fun DashboardScreenStatic(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            item { SectionHeader("📚 Students") }
+            // Seksioni i studentëve
+            item { SectionHeader("📚 Studentët") }
             items(students) { student ->
                 ItemCard(name = "${student.name} - ${student.email}")
             }
 
             item { Spacer(modifier = Modifier.height(24.dp)) }
-            item { SectionHeader("📘 Courses") }
+
+            // Seksioni i kurseve
+            item { SectionHeader("📘 Kurset") }
             items(courses) { course ->
                 ItemCard(name = "${course.name} - ${course.description}")
             }
 
             item { Spacer(modifier = Modifier.height(24.dp)) }
-            item { SectionHeader("👩‍🏫 Teachers") }
+
+            // Seksioni i mësuesve
+            item { SectionHeader("👩‍🏫 Mësuesit") }
             items(teachers) { teacher ->
                 ItemCard(name = "${teacher.firstName} ${teacher.lastName} - ${teacher.subject}")
             }
@@ -98,6 +106,7 @@ fun DashboardScreenStatic(
     }
 }
 
+// Komponentë për titujt e seksioneve në dashboard
 @Composable
 fun SectionHeader(title: String) {
     Text(
@@ -107,6 +116,7 @@ fun SectionHeader(title: String) {
     )
 }
 
+// Komponentë për paraqitjen e çdo elementi të listës (student, kurs, mësues)
 @Composable
 fun ItemCard(name: String) {
     Card(
@@ -123,23 +133,23 @@ fun ItemCard(name: String) {
     }
 }
 
-// Sample data për preview dhe testim
-
+// Të dhëna shembull për testim dhe paraqitje (Preview)
 val sampleStudents = listOf(
     Student("Sara ALiaj", "SaraAliaj@gmail.com"),
     Student("Orela_Kuci", "Orela_Kuci@example.com")
 )
 
 val sampleCourses = listOf(
-    Course("Mathematics", "Learn basic and advanced math"),
-    Course("Java Programming", "Learn the world of programming")
+    Course("Matematika", "Mëso matematikë bazë dhe të avancuar"),
+    Course("Programimi në Java", "Hyrje në botën e programimit")
 )
 
 val sampleTeachers = listOf(
-    Teacher("Anila", "Blerta", "Mathematics"),
-    Teacher("Emanuel", "Anisa", "Programming")
+    Teacher("Anila", "Blerta", "Matematika"),
+    Teacher("Emanuel", "Anisa", "Programim")
 )
 
+// Komponent për testimin e pamjes në preview
 @Preview(showBackground = true)
 @Composable
 fun PreviewDashboard() {
@@ -149,19 +159,14 @@ fun PreviewDashboard() {
             courses = sampleCourses,
             teachers = sampleTeachers
         )
-        // Në MainActivity, funksion për të ndërruar fragment
-
     }
 }
 
-
-
+// Funksione placeholder për fragmentet (ende të paimplementuara)
 private fun Unit.addToBackStack(nothing: Nothing?) {}
-
 private fun Unit.replace(value: Any, fragment: Fragment) {
     TODO("Not yet implemented")
 }
-
 private fun Nothing?.beginTransaction() {
     TODO("Not yet implemented")
 }

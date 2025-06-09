@@ -8,15 +8,15 @@ import com.example.applicationschool.Dto.CourseDto
 import com.example.applicationschool.Dto.StudentDto
 import com.example.applicationschool.Dto.TeacherDto
 import kotlinx.coroutines.launch
-
+// ViewModel për menaxhimin e të dhënave të kursit në mënyrë reaktive
 class CourseViewModel : ViewModel() {
-
+    // MutableLiveData që ruan listën e kurseve, e cila mund të ndryshojë
     private val _courseList = MutableLiveData<List<CourseDto>>()
     val courseList: LiveData<List<CourseDto>> get() = _courseList
-
+    // LiveData që ekspozohet për tu vëzhguar nga UI, pa mundësi ndryshimi nga jashtë
     fun loadCourses() {
         viewModelScope.launch {
-            val dummyTeacher = TeacherDto(
+            val dummyTeacher = TeacherDto(    // Krijohet një mësues i improvizuar (dummy) për qëllime testimi
                 id = 1,
                 firstName = "Ana",
                 lastName = "Krasniqi",
@@ -25,7 +25,7 @@ class CourseViewModel : ViewModel() {
                 name = "Ana Krasniqi"
             )
 
-            val dummyStudents = listOf(
+            val dummyStudents = listOf( // Krijohet një listë me studentë të improvizuar që i përkasin kursit
                 StudentDto(
                     id = 1,
                     code = "ST101",
